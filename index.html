@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probador de Estilos UI</title>
+<meta name="description" content="Catálogo interactivo de estilos visuales, layouts, técnicas de animación y patrones mobile para pedir diseños que no parezcan hechos por IA.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23151515'/><rect x='6' y='6' width='9' height='20' fill='%23FF4F00'/><rect x='17' y='6' width='9' height='9' fill='%23F3F1EC'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;800;900&family=Bricolage+Grotesque:wght@400;800&family=Caveat:wght@500;700&family=DM+Sans:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&family=Fredoka:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&family=Josefin+Sans:wght@400;600&family=Nunito:wght@400;800&family=Orbitron:wght@500;900&family=Patrick+Hand&family=Playfair+Display:wght@400;700&family=Poiret+One&family=Press+Start+2P&family=Righteous&family=Roboto+Flex:opsz,wght@8..144,300..900&family=Rubik:wght@400;700&family=Sora:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@400;700&family=Syne:wght@400;800&family=Unbounded:wght@400;800&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/shell.css">
+<link rel="stylesheet" href="css/preview.css">
+<link rel="stylesheet" href="css/mobile.css">
+</head>
+<body data-mode="web">
+
+<!-- Filtro SVG para "hover distortion" -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="liquid" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence id="liquidNoise" type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="3" result="n"/>
+    <feDisplacementMap id="liquidMap" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header class="bar">
+  <button class="bar-menu" id="menuBtn" aria-label="Abrir controles">Controles</button>
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name">Probador<b>/</b>UI</span>
+    <span class="brand-sub">estilos · layouts · técnicas · mobile</span>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="Modo">
+    <button class="seg-btn" data-mode="web" aria-pressed="true">Web</button>
+    <button class="seg-btn" data-mode="app" aria-pressed="false">App móvil</button>
+  </div>
+  <div class="seg" id="deviceSeg" role="radiogroup" aria-label="Dispositivo">
+    <button class="seg-btn" data-device="desktop" aria-pressed="true">Escritorio</button>
+    <button class="seg-btn" data-device="tablet" aria-pressed="false">Tablet</button>
+    <button class="seg-btn" data-device="phone" aria-pressed="false">Móvil</button>
+  </div>
+  <div class="bar-actions">
+    <button class="act" id="randomBtn">Aleatorio</button>
+    <button class="act" id="resetBtn">Reset</button>
+    <button class="act act-main" id="copyBtn">Copiar prompt</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="panel" id="panel">
+    <label class="search">
+      <span class="search-label">Buscar</span>
+      <input id="search" type="search" placeholder="parallax, neón, bento, swipe…" autocomplete="off">
+    </label>
+    <div id="groups"></div>
+    <p class="panel-foot">Tip: la URL guarda tu combinación. Cópiala para volver a ella.</p>
+  </aside>
+
+  <main class="stage">
+    <div class="stage-area" id="stageArea">
+
+      <!-- ===================== VISTA WEB ===================== -->
+      <div class="frame" id="frame" data-device="desktop">
+        <div class="frame-chrome" aria-hidden="true"><i></i><i></i><i></i><span id="frameUrl">cumbre.cafe</span></div>
+        <div class="frame-body">
+          <div class="curtain" id="curtain"></div>
+          <div class="pv" id="pv" data-style="minimal" data-layout="classic">
+            <div class="cursor-dot" id="cursorDot"></div>
+
+            <nav class="p-nav">
+              <span class="p-logo">CUMBRE</span>
+              <div class="p-links">
+                <a href="#" data-go="pv-origen">Orígenes</a>
+                <a href="#" data-go="pv-proceso">Proceso</a>
+                <a href="#" data-go="pv-galeria">Galería</a>
+              </div>
+              <a href="#" class="p-btn p-btn-sm magnet" data-go="pv-cta">Pedir</a>
+            </nav>
+
+            <section class="p-sec p-hero" id="pv-top">
+              <div class="p-hero-text">
+                <span class="p-badge">Tostado esta semana</span>
+                <h1 class="p-title" id="pvTitle">Café que sabe a montaña</h1>
+                <p class="p-lead">Granos de altura, tostados en lotes pequeños y enviados a tu puerta en 24 horas.</p>
+                <div class="p-actions">
+                  <a href="#" class="p-btn magnet" data-go="pv-origen">Ver cafés</a>
+                  <a href="#" class="p-btn p-btn-ghost magnet" data-go="pv-proceso">Nuestro proceso</a>
+                </div>
+              </div>
+              <div class="p-hero-art" aria-hidden="true">
+                <div class="layer l-sky" data-speed="0.05"></div>
+                <div class="layer l-sun" data-speed="0.35"></div>
+                <div class="layer l-grid" data-speed="0"></div>
+                <div class="layer l-back" data-speed="0.18"></div>
+                <div class="layer l-mid" data-speed="0.1"></div>
+                <div class="layer l-front" data-speed="0.02"></div>
+                <div class="layer l-cup" data-speed="-0.12"><span></span></div>
+              </div>
+            </section>
+
+            <div class="p-marquee" aria-hidden="true">
+              <div class="p-marquee-track">
+                <span>Origen único ✦ Tueste medio ✦ Envío 24 h ✦ 1,850 msnm ✦ Lotes pequeños ✦&nbsp;</span>
+                <span>Origen único ✦ Tueste medio ✦ Envío 24 h ✦ 1,850 msnm ✦ Lotes pequeños ✦&nbsp;</span>
+              </div>
+            </div>
+
+            <section class="p-sec p-features" id="pv-origen">
+              <header class="p-sec-head">
+                <span class="p-kicker">01 — Orígenes</span>
+                <h2>Seis cafés, seis montañas</h2>
+                <p>Cada lote viene de una sola finca. Lo tostamos el lunes y sale el martes.</p>
+              </header>
+              <div class="p-grid">
+                <article class="p-card" style="--n:0"><div class="p-img"></div><div class="p-card-body"><h3>Huehuetenango</h3><p>Frambuesa, panela y final largo.</p><div class="p-card-foot"><span class="p-price">Q95</span><button class="p-like" aria-label="Me gusta">♥</button></div></div></article>
+                <article class="p-card" style="--n:1"><div class="p-img"></div><div class="p-card-body"><h3>Acatenango</h3><p>Chocolate amargo y ceniza dulce.</p><div class="p-card-foot"><span class="p-price">Q90</span><button class="p-like" aria-label="Me gusta">♥</button></div></div></article>
+                <article class="p-card" style="--n:2"><div class="p-img"></div><div class="p-card-body"><h3>Atitlán</h3><p>Cítrico, floral y cuerpo ligero.</p><div class="p-card-foot"><span class="p-price">Q98</span><button class="p-like" aria-label="Me gusta">♥</button></div></div></article>
+                <article class="p-card" style="--n:3"><div class="p-img"></div><div class="p-card-body"><h3>Cobán</h3><p>Caramelo, nuez y acidez suave.</p><div class="p-card-foot"><span class="p-price">Q85</span><button class="p-like" aria-label="Me gusta">♥</button></div></div></article>
+                <article class="p-card" style="--n:4"><div class="p-img"></div><div class="p-card-body"><h3>Fraijanes</h3><p>Durazno y miel de abeja.</p><div class="p-card-foot"><span class="p-price">Q88</span><button class="p-like" aria-label="Me gusta">♥</button></div></div></article>
+                <article class="p-card" style="--n:5"><div class="p-img"></div><div class="p-card-body"><h3>Nuevo Oriente</h3><p>Cacao, especias y cuerpo denso.</p><div class="p-card-foot"><span class="p-price">Q92</span><button class="p-like" aria-label="Me gusta">♥</button></div></div></article>
+              </div>
+            </section>
+
+            <section class="p-sec p-story" id="pv-proceso">
+              <div class="p-story-visual" data-active="0">
+                <span class="p-kicker">02 — Proceso</span>
+                <div class="p-story-num">01</div>
+                <div class="p-story-label">Cosecha</div>
+                <div class="p-story-bar"><i></i></div>
+              </div>
+              <div class="p-story-steps">
+                <div class="p-step" data-step="0"><span>01</span><h3>Cosecha</h3><p>Solo cerezas rojas, cortadas a mano entre noviembre y marzo.</p></div>
+                <div class="p-step" data-step="1"><span>02</span><h3>Secado</h3><p>Veinte días en patio al sol, volteando el grano cada hora.</p></div>
+                <div class="p-step" data-step="2"><span>03</span><h3>Tueste</h3><p>Lotes de 5 kg con curva propia para cada finca.</p></div>
+                <div class="p-step" data-step="3"><span>04</span><h3>Taza</h3><p>Catamos cada lote antes de empacarlo. Si no pasa, no sale.</p></div>
+              </div>
+            </section>
+
+            <section class="p-sec p-gallery" id="pv-galeria">
+              <div class="p-gal-pin">
+                <header class="p-sec-head"><span class="p-kicker">03 — Galería</span><h2>De la finca a la taza</h2></header>
+                <div class="p-gal-track">
+                  <figure class="p-gal-item" style="--n:0"><div class="p-img"></div><figcaption>Cafetal al amanecer</figcaption></figure>
+                  <figure class="p-gal-item" style="--n:1"><div class="p-img"></div><figcaption>Patio de secado</figcaption></figure>
+                  <figure class="p-gal-item" style="--n:2"><div class="p-img"></div><figcaption>Tostador de 5 kg</figcaption></figure>
+                  <figure class="p-gal-item" style="--n:3"><div class="p-img"></div><figcaption>Mesa de cata</figcaption></figure>
+                  <figure class="p-gal-item" style="--n:4"><div class="p-img"></div><figcaption>Empaque a mano</figcaption></figure>
+                  <figure class="p-gal-item" style="--n:5"><div class="p-img"></div><figcaption>Primera taza</figcaption></figure>
+                </div>
+              </div>
+            </section>
+
+            <section class="p-sec p-stats">
+              <div class="p-stat">
+                <svg class="p-icon" viewBox="0 0 48 48"><path d="M6 38 L18 18 L26 30 L32 22 L42 38 Z"/><circle cx="34" cy="12" r="4"/></svg>
+                <b>1,850</b><span>metros de altura</span>
+              </div>
+              <div class="p-stat">
+                <svg class="p-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><path d="M24 13 V24 L31 29"/></svg>
+                <b>72 h</b><span>de fermentación</span>
+              </div>
+              <div class="p-stat">
+                <svg class="p-icon" viewBox="0 0 48 48"><path d="M9 18 H35 V30 A10 10 0 0 1 25 40 H19 A10 10 0 0 1 9 30 Z"/><path d="M35 21 H39 A4 4 0 0 1 39 29 H35"/><path d="M17 6 C14 10 20 11 17 15 M25 6 C22 10 28 11 25 15"/></svg>
+                <b>6</b><span>orígenes únicos</span>
+              </div>
+            </section>
+
+            <section class="p-sec p-cta" id="pv-cta">
+              <h2>Tu próxima taza empieza aquí</h2>
+              <p>Suscripción mensual desde Q85. Cancela cuando quieras.</p>
+              <a href="#" class="p-btn magnet" data-go="pv-top">Pedir ahora</a>
+            </section>
+
+            <footer class="p-foot">Cumbre es una marca ficticia para este probador de estilos.</footer>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== VISTA APP MÓVIL ===================== -->
+      <div class="phone" id="phone" data-sys="m3e">
+        <div class="ph-screen" id="phScreen">
+          <div class="ph-status"><b>9:41</b><span class="ph-status-icons"><i></i><i></i><i></i></span></div>
+
+          <div class="ph-pager" id="phPager">
+            <!-- Página 1: Inicio -->
+            <section class="ph-page" data-page="0">
+              <header class="ph-appbar"><small>Buenos días</small><h1>Cumbre</h1></header>
+              <div class="ph-search">Buscar cafés, orígenes…</div>
+              <div class="ph-feature ph-tap">
+                <div class="ph-feature-art"></div>
+                <div class="ph-feature-text"><small>Lote de la semana</small><b>Huehuetenango</b><span>Frambuesa · panela</span></div>
+              </div>
+              <div class="ph-chips"><span class="on">Todos</span><span>Lavados</span><span>Naturales</span><span>Honey</span></div>
+              <h2 class="ph-h2">Para ti</h2>
+              <ul class="ph-list" id="phList">
+                <li class="ph-item ph-tap" data-i="0"><i style="--h:18"></i><div><b>Acatenango</b><span>Chocolate amargo</span></div><em>Q90</em></li>
+                <li class="ph-item ph-tap" data-i="1"><i style="--h:150"></i><div><b>Atitlán</b><span>Cítrico y floral</span></div><em>Q98</em></li>
+                <li class="ph-item ph-tap" data-i="2"><i style="--h:35"></i><div><b>Cobán</b><span>Caramelo y nuez</span></div><em>Q85</em></li>
+                <li class="ph-item ph-tap" data-i="3"><i style="--h:330"></i><div><b>Fraijanes</b><span>Durazno y miel</span></div><em>Q88</em></li>
+              </ul>
+            </section>
+            <!-- Página 2: Descubrir (swipe cards) -->
+            <section class="ph-page" data-page="1">
+              <header class="ph-appbar"><small>Descubrir</small><h1>¿Te gusta?</h1></header>
+              <div class="ph-deck" id="phDeck"></div>
+              <div class="ph-deck-actions"><button class="ph-round ph-tap" data-swipe="-1" aria-label="No">✕</button><button class="ph-round ph-round-yes ph-tap" data-swipe="1" aria-label="Sí">♥</button></div>
+              <p class="ph-hint" id="phDeckHint">Arrastra la tarjeta a los lados</p>
+            </section>
+            <!-- Página 3: Perfil -->
+            <section class="ph-page" data-page="2">
+              <header class="ph-appbar"><small>Tu cuenta</small><h1>Perfil</h1></header>
+              <div class="ph-group">
+                <div class="ph-row ph-tap"><span>Suscripción</span><em>Mensual</em></div>
+                <div class="ph-row ph-tap"><span>Molienda</span><em>Media</em></div>
+                <div class="ph-row ph-tap"><span>Dirección</span><em>Casa</em></div>
+              </div>
+              <div class="ph-group">
+                <div class="ph-row ph-tap"><span>Notificaciones</span><em class="ph-switch on"></em></div>
+                <div class="ph-row ph-tap"><span>Vibración</span><em class="ph-switch on"></em></div>
+              </div>
+            </section>
+          </div>
+
+          <button class="ph-fab ph-tap" aria-label="Nuevo pedido">+</button>
+
+          <nav class="ph-nav" id="phNav">
+            <button class="ph-tap on" data-to="0"><i>⌂</i><span>Inicio</span></button>
+            <button class="ph-tap" data-to="1"><i>✦</i><span>Descubrir</span></button>
+            <button class="ph-tap" data-to="2"><i>◐</i><span>Perfil</span></button>
+          </nav>
+
+          <!-- Detalle (sin bottom sheet: pantalla completa) -->
+          <div class="ph-detail" id="phDetail">
+            <button class="ph-back ph-tap" id="phBack">‹ Atrás</button>
+            <div class="ph-detail-art"></div>
+            <h1 class="ph-detail-title">Café</h1>
+            <p class="ph-detail-notes">Notas</p>
+            <button class="ph-cta ph-tap">Agregar al pedido</button>
+          </div>
+
+          <!-- Bottom sheet -->
+          <div class="ph-scrim" id="phScrim"></div>
+          <div class="ph-sheet" id="phSheet">
+            <div class="ph-handle" id="phHandle"><i></i></div>
+            <div class="ph-sheet-art"></div>
+            <h1 class="ph-detail-title">Café</h1>
+            <p class="ph-detail-notes">Notas</p>
+            <button class="ph-cta ph-tap">Agregar al pedido</button>
+          </div>
+
+          <div class="ph-pulse" id="phPulse"></div>
+          <div class="ph-toast" id="phToast">bzz · vibración</div>
+          <div class="ph-home"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <section class="ficha" id="ficha">
+      <button class="ficha-toggle" id="fichaToggle" aria-expanded="true">Ficha y prompt</button>
+      <div class="ficha-body">
+        <div class="ficha-main" id="fichaMain"></div>
+        <div class="ficha-prompt">
+          <span class="lbl">Prompt para pedírmelo</span>
+          <pre id="promptOut"></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="scrim" id="panelScrim"></div>
+
+<script src="js/data.js"></script>
+<script src="js/mobile.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
